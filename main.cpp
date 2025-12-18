@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 int main(int argc, char *argv[])
 {
@@ -7,7 +8,12 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+    const bool fullscreen = qEnvironmentVariableIntValue("APP_FULLSCREEN") == 1;
+
     QQmlApplicationEngine engine;
+
+    engine.rootContext()->setContextProperty("appFullscreen", fullscreen);
+
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreationFailed,
@@ -15,6 +21,9 @@ int main(int argc, char *argv[])
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
     engine.loadFromModule("Clock", "Main");
+
+    if (engine.rootObjects().isEmpty())
+        return -1;
 
     return app.exec();
 }
