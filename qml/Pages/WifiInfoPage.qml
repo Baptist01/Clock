@@ -1,7 +1,10 @@
 import QtQuick
 import QtQuick.Controls
+import "../components"
 
 Item {
+    id: wifiPage
+    property StackView stackView: StackView.view
     width: parent ? parent.width : 320
     height: parent ? parent.height : 480
 
@@ -18,11 +21,9 @@ Item {
             height: 48
             color: "transparent"
 
-            ToolButton {
-                text: "←"
-                font.pixelSize: 20
+            BackButtonComponent {
                 anchors.verticalCenter: parent.verticalCenter
-                onClicked: StackView.view.pop()
+                stackView: wifiPage.stackView
             }
 
             Text {
@@ -40,9 +41,7 @@ Item {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
 
-                // Your backend object name might be different.
-                // If you used my C++ example, it's `connman.refresh()` not `connmanServices.refresh()`.
-                onClicked: connman.refresh()
+                onClicked: connmanServices.refresh()
             }
         }
 
@@ -55,7 +54,7 @@ Item {
             color: "#333333"
         }
 
-        // Example list using my earlier backend: connman.wifiModel
+        // Example list using the backend exposed in main.cpp.
         ListView {
             anchors.top: wifiHeader.bottom
             anchors.topMargin: 24
@@ -65,7 +64,7 @@ Item {
             anchors.margins: 16
             clip: true
 
-            model: connman.wifiModel
+            model: connmanServices.wifiModel
 
             delegate: ItemDelegate {
                 width: ListView.view.width

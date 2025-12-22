@@ -1,5 +1,6 @@
 ﻿import QtQuick
 import QtQuick.Controls
+import "pages"
 
 ApplicationWindow {
     id: window
@@ -16,7 +17,7 @@ ApplicationWindow {
     // Main screen content
     Loader {
         anchors.fill: parent
-        source: Qt.resolvedUrl("pages/ClockPage.qml")
+        sourceComponent: ClockPage { }
     }
 
     // Settings button stays in the shell so it overlays pages
@@ -35,15 +36,21 @@ ApplicationWindow {
     Drawer {
         id: settingsDrawer
         edge: Qt.RightEdge
-        width: 320
+        width: 360
         height: parent.height
         modal: true
         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
-        StackView {
-            id: settingsStack
+        contentItem: Item {
             anchors.fill: parent
-            initialItem: Qt.resolvedUrl("pages/SettingsListPage.qml")
+
+            StackView {
+                id: settingsStack
+                anchors.fill: parent
+                // initialItem: Qt.resolvedUrl("pages/SettingsListPage.qml")
+                initialItem: SettingsListPage { }
+            }
         }
     }
 }
+

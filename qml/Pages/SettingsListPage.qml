@@ -2,9 +2,9 @@ import QtQuick
 import QtQuick.Controls
 
 Item {
-    width: parent ? parent.width : 320
-    height: parent ? parent.height : 480
+    id: settingsRoot
     anchors.fill: parent
+    property StackView stackView: StackView.view
 
     Rectangle {
         anchors.fill: parent
@@ -46,8 +46,8 @@ Item {
             anchors.margins: 16
             clip: true
 
-            model: ["Display","Sound","Notifications","Wi-Fi","Bluetooth","Date & Time","Language",
-                    "Accessibility","About","Developer Options","Privacy","Updates"]
+            model: ["Display","Sound","Notifications","Wi-Fi","Bluetooth","Date & Time",
+                    "Language","About","Developer Options","Privacy","Updates"]
 
             delegate: ItemDelegate {
                 width: settingsList.width
@@ -63,14 +63,21 @@ Item {
 
                 onClicked: {
                     // StackView is the parent of this page at runtime
-                    const stack = StackView.view
+                    const stack = settingsRoot.stackView
                     if (!stack) return
 
-                    if (modelData === "Wi-Fi") {
-                        stack.push(Qt.resolvedUrl("WifiPage.qml"))
-                    } else {
-                        // placeholder page push if you want:
-                        // stack.push(Qt.resolvedUrl("PlaceholderPage.qml"), { title: modelData })
+                    switch (modelData) {
+                    case "Display": return stack.push(Qt.resolvedUrl("DisplayInfoPage.qml"))
+                    case "Sound": return stack.push(Qt.resolvedUrl("SoundInfoPage.qml"))
+                    case "Notifications": return stack.push(Qt.resolvedUrl("NotificationsInfoPage.qml"))
+                    case "Wi-Fi": return stack.push(Qt.resolvedUrl("WifiInfoPage.qml"))
+                    case "Bluetooth": return stack.push(Qt.resolvedUrl("BluetoothInfoPage.qml"))
+                    case "Date & Time": return stack.push(Qt.resolvedUrl("DateTimeInfoPage.qml"))
+                    case "Language": return stack.push(Qt.resolvedUrl("LanguageInfoPage.qml"))
+                    case "About": return stack.push(Qt.resolvedUrl("AboutInfoPage.qml"))
+                    case "Privacy": return stack.push(Qt.resolvedUrl("PrivacyInfoPage.qml"))
+                    case "Updates": return stack.push(Qt.resolvedUrl("UpdatesInfoPage.qml"))
+                    case "Developer Options": return stack.push(Qt.resolvedUrl("DeveloperOptionsPage.qml"))
                     }
                 }
 
