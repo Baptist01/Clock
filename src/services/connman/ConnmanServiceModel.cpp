@@ -113,18 +113,7 @@ QList<ConnmanServiceModel::ServiceEntry> ConnmanServiceModel::parseServicesArgum
 {
     QList<ServiceEntry> services;
 
-    if (!arg.canConvert<QDBusArgument>())
-        return services;
-
-    QDBusArgument dbusArg = arg.value<QDBusArgument>();
-    dbusArg.beginArray();
-    while (!dbusArg.atEnd()) {
-        QDBusObjectPath path;
-        QVariantMap dict;
-        dbusArg.beginStructure();
-        dbusArg >> path >> dict;
-        dbusArg.endStructure();
-
+    const auto appendEntry = [&services](const QDBusObjectPath &path, const QVariantMap &dict) {
         ServiceEntry entry;
         entry.path = path.path();
         entry.name = dict.value("Name").toString();
@@ -144,8 +133,52 @@ QList<ConnmanServiceModel::ServiceEntry> ConnmanServiceModel::parseServicesArgum
             entry.security = securityVar.toString();
 
         services.append(entry);
+    };
+
+    if (arg.userType() == qMetaTypeId<QDBusArgument>()) {
+        QDBusArgument dbusArg = qvariant_cast<QDBusArgument>(arg);
+        if (dbusArg.currentType() != QDBusArgument::ArrayType)
+            return services;
+
+        dbusArg.beginArray();
+        while (!dbusArg.atEnd()) {
+            QDBusObjectPath path;
+            QVariantMap dict;
+            dbusArg.beginStructure();
+            dbusArg >> path >> dict;
+            dbusArg.endStructure();
+            appendEntry(path, dict);
+        }
+        dbusArg.endArray();
+        return services;
     }
-    dbusArg.endArray();
+
+    if (arg.metaType().id() == QMetaType::QVariantList) {
+        const QVariantList list = arg.toList();
+        for (const QVariant &item : list) {
+            if (item.userType() == qMetaTypeId<QDBusArgument>()) {
+                QDBusArgument itemArg = qvariant_cast<QDBusArgument>(item);
+                if (itemArg.currentType() == QDBusArgument::StructureType) {
+                    QDBusObjectPath path;
+                    QVariantMap dict;
+                    itemArg.beginStructure();
+                    itemArg >> path >> dict;
+                    itemArg.endStructure();
+                    appendEntry(path, dict);
+                }
+                continue;
+            }
+
+            if (item.metaType().id() == QMetaType::QVariantList) {
+                const QVariantList pair = item.toList();
+                if (pair.size() >= 2) {
+                    const QDBusObjectPath path = qvariant_cast<QDBusObjectPath>(pair.at(0));
+                    const QVariantMap dict = pair.at(1).toMap();
+                    appendEntry(path, dict);
+                }
+            }
+        }
+    }
 
     return services;
 }
