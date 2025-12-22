@@ -12,8 +12,6 @@ qt_add_executable(appClock
     src/main.cpp
     src/services/connman/ConnmanServiceModel.cpp
     src/services/connman/ConnmanServiceModel.h
-    src/services/connman/MockConnmanServiceModel.cpp
-    src/services/connman/MockConnmanServiceModel.h
 )
 
 qt_add_qml_module(appClock
