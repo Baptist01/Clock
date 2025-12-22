@@ -18,8 +18,10 @@ qt_add_qml_module(appClock
     URI Clock
     QML_FILES 
         qml/Main.qml
-        QML_FILES qml/Pages/ClockPage.qml
-        QML_FILES qml/Components/Divider.qml qml/Controls/IconButton.qml qml/Pages/ClockPage.qml qml/Styles/Colors.qml qml/Main.qml
+        QML_FILES qml/pages/ClockPage.qml
+        QML_FILES qml/components/Divider.qml qml/controls/IconButton.qml qml/pages/ClockPage.qml qml/styles/Colors.qml qml/Main.qml
+        QML_FILES qml/pages/WifiPage.qml
+        QML_FILES qml/pages/SettingsListPage.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

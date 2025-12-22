@@ -2,13 +2,25 @@ import QtQuick
 import QtQuick.Controls
 
 Item {
-    id: root
-    anchors.fill: parent
+    Rectangle {
+        anchors.fill: parent
+        color: "black"
 
-    Text {
-        anchors.centerIn: parent
-        text: "Clock"
-        color: "white"
-        font.pixelSize: 48
+        Text {
+            id: timeText
+            anchors.centerIn: parent
+            font.pixelSize: 120
+            font.bold: true
+            color: "white"
+            text: Qt.formatTime(new Date(), "hh:mm:ss")
+        }
+
+        Timer {
+            interval: 1000
+            repeat: true
+            running: true
+            triggeredOnStart: true
+            onTriggered: timeText.text = Qt.formatTime(new Date(), "hh:mm:ss")
+        }
     }
 }
