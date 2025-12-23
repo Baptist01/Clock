@@ -18,7 +18,8 @@ qt_add_qml_module(appClock
     URI Clock
     QML_FILES 
         qml/Main.qml
-        QML_FILES  qml/controls/IconButton.qml qml/styles/Colors.qml qml/Main.qml
+        QML_FILES qml/controls/IconButton.qml
+        QML_FILES qml/styles/Colors.qml
         QML_FILES qml/pages/ClockPage.qml
         QML_FILES qml/pages/WifiInfoPage.qml
         QML_FILES qml/pages/AboutInfoPage.qml
