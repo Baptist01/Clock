@@ -47,7 +47,6 @@ ApplicationWindow {
             StackView {
                 id: settingsStack
                 anchors.fill: parent
-                // initialItem: Qt.resolvedUrl("pages/SettingsListPage.qml")
                 initialItem: SettingsListPage { }
             }
         }

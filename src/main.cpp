@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-#include "services/connman/ConnmanServiceModel.h"
+#include "./app/timezonemanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,11 +13,10 @@ int main(int argc, char *argv[])
     const bool fullscreen = qEnvironmentVariableIntValue("APP_FULLSCREEN") == 1;
 
     QQmlApplicationEngine engine;
+    TimeZoneManager timeZoneManager;
 
     engine.rootContext()->setContextProperty("appFullscreen", fullscreen);
-
-    ConnmanServiceModel connmanServices;
-    engine.rootContext()->setContextProperty("connmanServices", &connmanServices);
+    engine.rootContext()->setContextProperty("timeZoneManager", &timeZoneManager);
 
     QObject::connect(
         &engine,

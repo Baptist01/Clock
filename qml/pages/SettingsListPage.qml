@@ -3,8 +3,9 @@ import QtQuick.Controls
 
 Item {
     id: settingsRoot
-    anchors.fill: parent
     property StackView stackView: StackView.view
+    width: parent ? parent.width : 0
+    height: parent ? parent.height : 0
 
     Rectangle {
         anchors.fill: parent
@@ -46,8 +47,9 @@ Item {
             anchors.margins: 16
             clip: true
 
-            model: ["Display","Sound","Notifications","Wi-Fi","Bluetooth","Date & Time",
-                    "Language","About","Developer Options","Privacy","Updates"]
+            model: ["Date & Time","Wi-Fi","About",
+                    "Display","Sound","Notifications","Bluetooth",
+                    "Language","Privacy"]
 
             delegate: ItemDelegate {
                 width: settingsList.width
@@ -55,14 +57,13 @@ Item {
                 contentItem: Text {
                     text: modelData
                     color: "white"
-                    font.pixelSize: 18
+                    font.pixelSize: 22
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                 }
                 background: Rectangle { color: "transparent" }
 
                 onClicked: {
-                    // StackView is the parent of this page at runtime
                     const stack = settingsRoot.stackView
                     if (!stack) return
 

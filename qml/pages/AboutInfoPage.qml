@@ -1,10 +1,12 @@
 import QtQuick
 import QtQuick.Controls
+import "../components"
 
 Item {
-    id: pageRoot
+    id: aboutPage
     property StackView stackView: StackView.view
-    anchors.fill: parent
+    width: parent ? parent.width : 0
+    height: parent ? parent.height : 0
 
     Rectangle {
         anchors.fill: parent
@@ -19,17 +21,16 @@ Item {
             height: 48
             color: "transparent"
 
-            ToolButton {
-                text: "<"
-                font.pixelSize: 20
+            BackButtonComponent {
+                id: backButton
                 anchors.verticalCenter: parent.verticalCenter
-                onClicked: pageRoot.stackView && pageRoot.stackView.pop()
+                stackView: aboutPage.stackView
             }
 
             Text {
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 36
+                anchors.left: backButton.right
+                anchors.leftMargin: 8
                 color: "white"
                 font.pixelSize: 24
                 text: "About"
@@ -37,6 +38,7 @@ Item {
         }
 
         Rectangle {
+            id: divider
             anchors.top: header.bottom
             anchors.left: parent.left
             anchors.right: parent.right
@@ -46,11 +48,13 @@ Item {
         }
 
         Text {
-            anchors.centerIn: parent
+            anchors.left: parent.left
+            anchors.top: divider.bottom
+            anchors.margins: 16
             color: "white"
-            font.pixelSize: 20
-            text: qsTr("This page is being under development!")
+            font.pixelSize: 16
+            text: qsTr("This application is made by Poseidon. \nThanks for using it!
+Do you have any questions about how it \nworks feel free to send a mail to: \nHello@gmail.com")
         }
     }
 }
-

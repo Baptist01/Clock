@@ -1,10 +1,12 @@
 import QtQuick
 import QtQuick.Controls
+import "../components"
 
 Item {
-    id: pageRoot
+    id: displayPage
     property StackView stackView: StackView.view
-    anchors.fill: parent
+    width: parent ? parent.width : 0
+    height: parent ? parent.height : 0
 
     Rectangle {
         anchors.fill: parent
@@ -19,17 +21,16 @@ Item {
             height: 48
             color: "transparent"
 
-            ToolButton {
-                text: "<"
-                font.pixelSize: 20
+            BackButtonComponent {
+                id: backButton
                 anchors.verticalCenter: parent.verticalCenter
-                onClicked: pageRoot.stackView && pageRoot.stackView.pop()
+                stackView: displayPage.stackView
             }
 
             Text {
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 36
+                anchors.left: backButton.right
+                anchors.leftMargin: 8
                 color: "white"
                 font.pixelSize: 24
                 text: "Display"
