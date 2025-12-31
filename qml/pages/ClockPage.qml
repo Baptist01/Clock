@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import Clock 1.0
 
 Item {
     property string time: ""
@@ -15,30 +16,25 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: "black"
+        color: Styling.bg
 
-        Column {
-            anchors.fill: parent
-            spacing: 8
+        Text {
+            id: dateText
+            anchors.bottom: timeText.top
+            anchors.left: timeText.left
+            font.pixelSize: Styling.date_text_size
+            font.bold: false
+            color: Styling.text
+            text: dates
+        }
 
-            Text {
-                id: dateText
-                anchors.bottom: timeText.top
-                anchors.left: timeText.left
-                font.pixelSize: 40
-                font.bold: false
-                color: "light gray"
-                text: dates
-            }
-
-            Text {
-                id: timeText
-                anchors.centerIn: parent
-                font.pixelSize: 120
-                font.bold: true
-                color: "white"
-                text: time
-            }
+        Text {
+            id: timeText
+            anchors.centerIn: parent
+            font.pixelSize: Styling.time_text_size
+            font.bold: true
+            color: Styling.text
+            text: time
         }
 
         Timer {
@@ -50,7 +46,7 @@ Item {
         }
 
         Timer {
-            interval: 100000
+            interval: 1000
             repeat: true
             running: true
             triggeredOnStart: true
@@ -59,9 +55,18 @@ Item {
 
         Connections {
             target: timeZoneManager
-            function onTimeZoneIdChanged() { updateTime(); updateDate() }
-            function onTimeFormatChanged() { updateTime(); updateDate() }
-            function onDateFormatChanged() { updateTime(); updateDate() }
+            function onTimeZoneIdChanged() {
+                updateTime()
+                updateDate()
+            }
+            function onTimeFormatChanged() {
+                updateTime()
+                updateDate()
+            }
+            function onDateFormatChanged() {
+                updateTime()
+                updateDate()
+            }
         }
     }
 

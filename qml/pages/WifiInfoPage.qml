@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import "../components"
+import Clock 1.0
 
 Item {
     id: wifiPage
@@ -10,14 +11,14 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: "#111111"
+        color: Styling.setting_bg
 
         Rectangle {
-            id: wifiHeader
+            id: header
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.margins: 16
+            anchors.margins: 8
             height: 48
             color: "transparent"
 
@@ -44,14 +45,7 @@ Item {
             }
         }
 
-        Rectangle {
-            anchors.top: wifiHeader.bottom
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.margins: 16
-            height: 1
-            color: "#333333"
-        }
+        Divider { }
     }
 }
 

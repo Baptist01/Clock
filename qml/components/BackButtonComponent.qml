@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import Clock 1.0
 
 MouseArea {
     property StackView stackView: StackView.view
@@ -7,19 +8,16 @@ MouseArea {
     width: 40
     height: 40
 
-    // anchors.right: parent.right
-    // anchors.rightMargin: 32
-    // anchors.verticalCenter: parent.verticalCenter
-
     Rectangle {
         anchors.fill: parent
         radius: 20
-        color: pressed ? "#444" : "#222"
+        color: pressed ? Styling.pressed_btn : Styling.unpressed_btn
 
         Text {
             id: backtext
             anchors.centerIn: parent
-            text: qsTr("Back")
+            font.pixelSize: 25
+            text: qsTr("<")
             color: "white"
         }
     }

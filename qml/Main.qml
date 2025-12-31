@@ -7,7 +7,6 @@ ApplicationWindow {
     width: 800
     height: 480
     visible: true
-    color: "black"
 
     Component.onCompleted: {
         if (typeof appFullscreen !== "undefined" && appFullscreen)
@@ -29,7 +28,7 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.topMargin: 12
         anchors.rightMargin: 16
-        background: Rectangle { color: "#000000" }
+        background: Rectangle { color: Styling.bg }
         onClicked: settingsDrawer.open()
     }
 

@@ -8,6 +8,29 @@ find_package(Qt6 REQUIRED COMPONENTS Quick)
 
 qt_standard_project_setup(REQUIRES 6.8)
 
+set(plain_qml_files
+    qml/Main.qml
+    qml/pages/ClockPage.qml
+    qml/pages/WifiInfoPage.qml
+    qml/pages/SettingsListPage.qml
+    qml/pages/DisplayInfoPage.qml
+    qml/pages/SoundInfoPage.qml
+    qml/pages/NotificationsInfoPage.qml
+    qml/pages/BluetoothInfoPage.qml
+    qml/pages/DateTimeInfoPage.qml
+    qml/pages/LanguageInfoPage.qml
+    qml/pages/PrivacyInfoPage.qml
+    qml/pages/AboutInfoPage.qml
+    qml/components/BackButtonComponent.qml
+)
+
+set(qml_singletons
+    qml/theme/Styling.qml
+)
+
+set_source_files_properties(${qml_singletons}
+    PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
+
 qt_add_executable(appClock
     src/main.cpp
     src/app/timezonemanager.cpp
@@ -16,24 +39,9 @@ qt_add_executable(appClock
 
 qt_add_qml_module(appClock
     URI Clock
-    QML_FILES
-        qml/Main.qml
-        QML_FILES qml/pages/ClockPage.qml
-        QML_FILES qml/pages/WifiInfoPage.qml
-        QML_FILES qml/pages/AboutInfoPage.qml
-        QML_FILES qml/pages/SettingsListPage.qml
-        QML_FILES
-        QML_FILES qml/pages/DisplayInfoPage.qml
-        QML_FILES qml/pages/SoundInfoPage.qml
-        QML_FILES qml/pages/NotificationsInfoPage.qml
-        QML_FILES qml/pages/BluetoothInfoPage.qml
-        QML_FILES qml/pages/DateTimeInfoPage.qml
-        QML_FILES qml/pages/LanguageInfoPage.qml
-        QML_FILES qml/pages/PrivacyInfoPage.qml
-        QML_FILES
-        QML_FILES
-        QML_FILES qml/pages/AboutInfoPage.qml
-        QML_FILES qml/components/BackButtonComponent.qml
+    VERSION 1.0
+    QML_FILES ${plain_qml_files} ${qml_singletons}
+    QML_FILES qml/components/Divider.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

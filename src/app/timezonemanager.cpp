@@ -9,7 +9,7 @@
 TimeZoneManager::TimeZoneManager(QObject *parent)
     : QObject(parent)
 {
-    /// set sate logic
+    /// set state logic
     const QList<QByteArray> zoneIds = QTimeZone::availableTimeZoneIds();
     m_availableTimeZones.reserve(zoneIds.size());
     for (const QByteArray &id : zoneIds) {

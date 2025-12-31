@@ -1,5 +1,7 @@
 import QtQuick
 import QtQuick.Controls
+import "../components"
+import Clock 1.0
 
 Item {
     id: settingsRoot
@@ -9,10 +11,10 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: "#111111"
+        color: Styling.setting_bg
 
         Rectangle {
-            id: settingsHeader
+            id: header
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
@@ -23,23 +25,16 @@ Item {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Settings"
-                font.pixelSize: 24
-                color: "white"
+                font.pixelSize: Styling.menu_header_text_size
+                color: Styling.text
             }
         }
 
-        Rectangle {
-            anchors.top: settingsHeader.bottom
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.margins: 16
-            height: 1
-            color: "#333333"
-        }
+        Divider { }
 
         ListView {
             id: settingsList
-            anchors.top: settingsHeader.bottom
+            anchors.top: header.bottom
             anchors.topMargin: 24
             anchors.left: parent.left
             anchors.right: parent.right
@@ -47,9 +42,7 @@ Item {
             anchors.margins: 16
             clip: true
 
-            model: ["Date & Time","Wi-Fi","About",
-                    "Display","Sound","Notifications","Bluetooth",
-                    "Language","Privacy"]
+            model: ["Date & Time", "Wi-Fi", "About", "Display", "Sound", "Notifications", "Bluetooth", "Language", "Privacy"]
 
             delegate: ItemDelegate {
                 width: settingsList.width
@@ -57,28 +50,42 @@ Item {
                 contentItem: Text {
                     text: modelData
                     color: "white"
-                    font.pixelSize: 22
+                    font.pixelSize: 30
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                 }
-                background: Rectangle { color: "transparent" }
+                background: Rectangle {
+                    color: "transparent"
+                }
 
                 onClicked: {
                     const stack = settingsRoot.stackView
-                    if (!stack) return
+                    if (!stack)
+                        return
 
                     switch (modelData) {
-                    case "Display": return stack.push(Qt.resolvedUrl("DisplayInfoPage.qml"))
-                    case "Sound": return stack.push(Qt.resolvedUrl("SoundInfoPage.qml"))
-                    case "Notifications": return stack.push(Qt.resolvedUrl("NotificationsInfoPage.qml"))
-                    case "Wi-Fi": return stack.push(Qt.resolvedUrl("WifiInfoPage.qml"))
-                    case "Bluetooth": return stack.push(Qt.resolvedUrl("BluetoothInfoPage.qml"))
-                    case "Date & Time": return stack.push(Qt.resolvedUrl("DateTimeInfoPage.qml"))
-                    case "Language": return stack.push(Qt.resolvedUrl("LanguageInfoPage.qml"))
-                    case "About": return stack.push(Qt.resolvedUrl("AboutInfoPage.qml"))
-                    case "Privacy": return stack.push(Qt.resolvedUrl("PrivacyInfoPage.qml"))
-                    case "Updates": return stack.push(Qt.resolvedUrl("UpdatesInfoPage.qml"))
-                    case "Developer Options": return stack.push(Qt.resolvedUrl("DeveloperOptionsPage.qml"))
+                    case "Display":
+                        return stack.push(Qt.resolvedUrl("DisplayInfoPage.qml"))
+                    case "Sound":
+                        return stack.push(Qt.resolvedUrl("SoundInfoPage.qml"))
+                    case "Notifications":
+                        return stack.push(Qt.resolvedUrl(
+                                              "NotificationsInfoPage.qml"))
+                    case "Wi-Fi":
+                        return stack.push(Qt.resolvedUrl("WifiInfoPage.qml"))
+                    case "Bluetooth":
+                        return stack.push(Qt.resolvedUrl(
+                                              "BluetoothInfoPage.qml"))
+                    case "Date & Time":
+                        return stack.push(Qt.resolvedUrl(
+                                              "DateTimeInfoPage.qml"))
+                    case "Language":
+                        return stack.push(Qt.resolvedUrl(
+                                              "LanguageInfoPage.qml"))
+                    case "About":
+                        return stack.push(Qt.resolvedUrl("AboutInfoPage.qml"))
+                    case "Privacy":
+                        return stack.push(Qt.resolvedUrl("PrivacyInfoPage.qml"))
                     }
                 }
 
