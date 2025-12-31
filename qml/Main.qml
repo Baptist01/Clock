@@ -23,13 +23,18 @@ ApplicationWindow {
     ToolButton {
         id: settingsButton
         text: "S"
-        font.pixelSize: 28
         anchors.top: parent.top
         anchors.right: parent.right
-        anchors.topMargin: 12
-        anchors.rightMargin: 16
+        anchors.margins: 16
         background: Rectangle { color: Styling.bg }
         onClicked: settingsDrawer.open()
+
+        contentItem: Text {
+            id: settingsButtonText
+            text: parent.text
+            color: Styling.text
+            font.pixelSize: Styling.menu_header_text_size
+        }
     }
 
     Drawer {

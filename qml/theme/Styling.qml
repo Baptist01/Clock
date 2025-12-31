@@ -10,10 +10,10 @@ QtObject {
     readonly property color unpressed_btn: "#222"
 
     // text
-    property int date_text_size: 40
-    property int time_text_size: 120
+    property int date_text_size: 50
+    property int time_text_size: 140
     property int menu_header_text_size: 48
-    property int menu_text_size: 25
+    property int menu_text_size: 30
     property int menu_small_text_size: 18
 
     // margins

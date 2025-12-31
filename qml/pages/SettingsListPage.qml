@@ -49,8 +49,8 @@ Item {
 
                 contentItem: Text {
                     text: modelData
-                    color: "white"
-                    font.pixelSize: 30
+                    color: Styling.text
+                    font.pixelSize: Styling.menu_header_text_size
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                 }
